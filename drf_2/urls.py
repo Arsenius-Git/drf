@@ -29,5 +29,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('snippet/', include("main.urls")),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('snippets/<int:pk>/highlight/', views.SnippetHighLight.as_view()),
+    #path('snippets/<int:pk>/highlight/', views.SnippetHighLight.as_view()),
 ]

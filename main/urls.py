@@ -1,18 +1,17 @@
 from tkinter.font import names
 
 from rest_framework.urlpatterns import format_suffix_patterns
-from django.urls import path
-
+from django.urls import path, include
+from rest_framework import renderers
+from rest_framework.routers import DefaultRouter
 from main import views
+from main.views import api_root, SnippetViewSet, UserViewSet
 
-urlpatterns = format_suffix_patterns([
-    path('', views.api_root),
-    path("main/", views.SnippetList.as_view(), name='snippet-list'),
-    path("<int:pk>/", views.SnippetDetail.as_view(), name='snippet-detail'),
-    path('<int:pk>/highlight/', views.SnippetHighLight.as_view(), name='snippet-highlight'),
-    path("users/", views.UserList.as_view(),
-         name='user-list'),
-    path("users/<int:pk>/", views.UserDetail.as_view(),
-         name='user-detail'),
-])
+router = DefaultRouter()
+router.register(r'snippets', views.SnippetViewSet, basename='snippet')
+router.register(r'users', views.UserViewSet, basename='user')
+
+urlpatterns = [
+    path('', include(router.urls)),
+]
 
